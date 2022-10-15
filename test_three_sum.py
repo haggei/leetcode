@@ -5,23 +5,40 @@ from typing import List
 
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
         valid_three_sums = set()
-        for a in range(len(nums)):
-            for b in range(a + 1, len(nums)):
-                for c in range(b + 1, len(nums)):
-                    if nums[a] + nums[b] + nums[c] == 0:
-                        zero_sum = [nums[a], nums[b], nums[c]]
-                        zero_sum.sort()
-                        valid_three_sums.add(tuple(zero_sum))
+        for i, a in enumerate(nums):
+            if i > 0 and a == nums[i - 1]:
+                continue
+            left = 0
+            right = len(nums) - 1
+            while right > left:
+                while a + nums[left] + nums[right] > 0 or right == i:
+                    right -= 1
+                    if right <= left:
+                        break
+                while a + nums[left] + nums[right] < 0 or left == i:
+                    left += 1
+                    if left >= right:
+                        break
+                if left == right or i == left or i == right:
+                    continue
+                if a + nums[left] + nums[right] == 0:
+                    zero_sum = [a, nums[left], nums[right]]
+                    zero_sum.sort()
+                    valid_three_sums.add(tuple(zero_sum))
+                    left += 1
+
         return list(list(zero_sum) for zero_sum in valid_three_sums)
 
 
 @pytest.mark.parametrize(
     "nums,expected",
     [
-        ([-1, 0, 1, 2, -1, -4], [[-1, -1, 2], [-1, 0, 1]]),
+        ([-1, 0, 1, 2, -1, -4], [[-1, 0, 1], [-1, -1, 2]]),
         ([0, 1, 1], []),
         ([0, 0, 0], [[0, 0, 0]]),
+        ([-2, 1, 4], []),
     ],
 )
 def test_three_sum(nums, expected):
