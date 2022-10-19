@@ -21,4 +21,3 @@ def test_two_sum(nums, target, expected):
     sol = Solution()
     result = sol.twoSum(nums, target)
     assert result == expected
-

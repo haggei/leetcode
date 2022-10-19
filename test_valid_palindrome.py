@@ -20,4 +20,3 @@ def test_two_sum(s, expected):
     sol = Solution()
     result = sol.isPalindrome(s)
     assert result == expected
-
