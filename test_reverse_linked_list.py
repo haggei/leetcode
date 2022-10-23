@@ -36,6 +36,6 @@ class Solution:
         (ListNode(1, ListNode(2)), ListNode(2, ListNode(1))),
     ],
 )
-def test_topKFrequent(head, expected):
+def test_reverse_list(head, expected):
     sol = Solution().reverseList(head)
     assert str(expected) == str(sol)
